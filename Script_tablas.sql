@@ -4,9 +4,9 @@ USE DeseoExpress;
 
 CREATE TABLE Proveedor(
 	id				int				Not null	auto_increment,
-	nombre			varchar(20)		Not null,
+	nombre			varchar(40)		Not null,
 	pais			int				Not null,		-- usar tabla de paises posibles
-	telefono		varchar(12)		,				-- Revisar Tipo de dato
+	telefono		varchar(15)		,				-- Revisar Tipo de dato
 	verificado		bit				Not null	default 0,
 	Primary Key (id)
 );
@@ -15,7 +15,7 @@ CREATE TABLE Proveedor(
 CREATE TABLE Producto(
 	id				int				Not null auto_increment, 	-- id en el sistema de ventas
 	serial			varchar(20)		Not null 	unique,	-- serial propio del producto (codigo de barras)
-	nombre			varchar(20)		Not null,
+	nombre			varchar(40)		Not null,
 	precio			int				Not null default 0,
 	-- cantidad		int				Not null default 0,
 	-- ubicacion		int				Not null default 0, -- enlazada a una tabla de ubicaciones
@@ -40,7 +40,7 @@ CREATE TABLE Cliente(
 	apellido1		varchar(20)		Not null,
 	apellido2		varchar(20)		Not null default '',
 	nacimiento		date			Not null,
-	telefono		varchar(8)		,		-- Revisar Tipo de dato
+	telefono		varchar(15)		,		-- Revisar Tipo de dato
 	pais			int				Not null,		-- Recisar si se de debe desglosar en pais, estadp, cuidad, zip, direccion
 	estado			varchar(20)		Not null,		
 	ciudad			varchar(20)		Not null,		
@@ -68,7 +68,7 @@ CREATE TABLE Calificacion(
 
 CREATE TABLE Ubicaciones(
 	id					int 	Not null 	auto_increment,
-	-- id_proveedor		int		Not null,		-- Foreing Key a Id Proveedor
+	id_proveedor		int		Not null,		-- Foreing Key a Id Proveedor
 	-- ubicacion			varchar(20)			Not null,
 	pais			int				Not null,		-- Recisar si se de debe desglosar en pais, estadp, cuidad, zip, direccion
 	estado			varchar(20)		Not null,		
@@ -123,5 +123,5 @@ ADD Foreign Key (id_ubicacion)	References 	Ubicaciones(id),
 add	Foreign Key (id_producto) 	References 	Producto(id);
 
 	
--- ALTER TABLE  Ubicaciones
--- ADD Foreign Key (id_proveedor) References Proveedor(Id);
+ALTER TABLE  Ubicaciones
+ADD Foreign Key (id_proveedor) References Proveedor(Id);
