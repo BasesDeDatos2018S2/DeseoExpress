@@ -5,8 +5,8 @@ USE DeseoExpress;
 CREATE TABLE Proveedor(
 	id				int				Not null	auto_increment,
 	nombre			varchar(40)		Not null,
-	pais			int				Not null,		-- usar tabla de paises posibles
-	telefono		varchar(15)		,				-- Revisar Tipo de dato
+	pais			int				Not null,		
+	telefono		varchar(15)		,				
 	verificado		bit				Not null	default 0,
 	Primary Key (id)
 );
@@ -14,13 +14,13 @@ CREATE TABLE Proveedor(
 
 CREATE TABLE Producto(
 	id				int				Not null auto_increment, 	-- id en el sistema de ventas
-	serial			varchar(20)		Not null 	unique,	-- serial propio del producto (codigo de barras)
+	serial			varchar(20)		Not null 	unique,			-- serial propio del producto (codigo de barras)
 	nombre			varchar(40)		Not null,
 	precio			int				Not null default 0,
 	-- cantidad		int				Not null default 0,
 	-- ubicacion		int				Not null default 0, -- enlazada a una tabla de ubicaciones
 	tiempo_aliste	int				Not null default 0,
-	id_proveedor	int				Not null,		-- Foreing Key a Id Proveedor
+	id_proveedor	int				Not null,		
 	Primary key (id)
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE Pedido(
 	id				int				Not null auto_increment,
 	fecha_creacion	timestamp		Not null default NOW(),
 	estado			int				Not null,		-- revisar Pendiente, Proceso, Enviado, Entregado ENUM?
-	id_cliente		int				Not null,		-- Foreing Key a Id Cliente
+	id_cliente		int				Not null,		
 	Primary Key (id)
 );
 
@@ -40,8 +40,8 @@ CREATE TABLE Cliente(
 	apellido1		varchar(20)		Not null,
 	apellido2		varchar(20)		Not null default '',
 	nacimiento		date			Not null,
-	telefono		varchar(15)		,		-- Revisar Tipo de dato
-	pais			int				Not null,		-- Recisar si se de debe desglosar en pais, estadp, cuidad, zip, direccion
+	telefono		varchar(15)		,				
+	pais			int				Not null,		
 	estado			varchar(20)		Not null,		
 	ciudad			varchar(20)		Not null,		
 	codigo_postal	varchar(20)		Not null,		
@@ -51,10 +51,11 @@ CREATE TABLE Cliente(
 
 
 CREATE TABLE Detalle(
-	id_producto		int		Not null,		-- Foreing Key a Serial Producto
+	id_producto		int		Not null,		-- Foreing Key a id Producto
 	id_pedido		int		Not null,		-- Foreing Key a Numero Pedido
 	cantidad		int		Not null,
 	precio			int		Not null,
+    -- agrega ubicacion????
 	Primary Key (id_producto, id_pedido)
 );
 
@@ -62,7 +63,7 @@ CREATE TABLE Detalle(
 CREATE TABLE Calificacion(
 	id_cliente		int		Not null,		-- Foreing Key a Id cliente
 	id_proveedor	int		Not null,		-- Foreing Key a Id proveedor
-	Nota			int		Not null,
+	nota			int		Not null,
 	Primary Key (id_cliente, id_proveedor)
 );
 
@@ -70,7 +71,7 @@ CREATE TABLE Ubicaciones(
 	id					int 	Not null 	auto_increment,
 	id_proveedor		int		Not null,		-- Foreing Key a Id Proveedor
 	-- ubicacion			varchar(20)			Not null,
-	pais			int				Not null,		-- Recisar si se de debe desglosar en pais, estadp, cuidad, zip, direccion
+	pais			int				Not null,		
 	estado			varchar(20)		Not null,		
 	ciudad			varchar(20)		Not null,		
 	codigo_postal	varchar(20)		Not null,		
