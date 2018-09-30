@@ -14,7 +14,7 @@ CREATE TABLE Proveedor(
 
 CREATE TABLE Producto(
 	id				int				Not null auto_increment, 	-- id en el sistema de ventas
-	serial			varchar(20)		Not null 	unique,			-- serial propio del producto (codigo de barras)
+	serial			varchar(20)		Not null,			-- serial propio del producto (codigo de barras)
 	nombre			varchar(40)		Not null,
 	precio			int				Not null default 0,
 	-- cantidad		int				Not null default 0,
