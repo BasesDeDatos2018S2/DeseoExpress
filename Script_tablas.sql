@@ -3,88 +3,94 @@ CREATE DATABASE DeseoExpress;
 USE DeseoExpress;
 
 CREATE TABLE Proveedor(
-	Id				int				Not null,
-	Nombre			varchar(20)		Not null,
-	Pais			varchar(20)		Not null,
-	Telefono		varchar(8)		Not null,		-- Revisar Tipo de dato
-	Verificado		bit				Not null,
-	Primary Key (Id)
+	id				int				Not null	auto_increment,
+	nombre			varchar(20)		Not null,
+	pais			int				Not null,		-- usar tabla de paises posibles
+	telefono		varchar(12)		,				-- Revisar Tipo de dato
+	verificado		bit				Not null	default 0,
+	Primary Key (id)
 );
 
 
 CREATE TABLE Producto(
-	Serial			int				Not null,
-	Nombre			varchar(20)		Not null,
-	Precio			int				Not null,
-	Cantidad		int				Not null,
-	Ubicacion		varchar(20)		Not null,
-	TiempoAliste	varchar(20)		Not null,
-	IdProveedor		int				Not null,		-- Foreing Key a Id Proveedor
-	Primary key (Serial)
+	id				int				Not null, 	-- id en el sistema de ventas
+	serial			varchar(20)		Not null 	unique,	-- serial propio del producto (codigo de barras)
+	nombre			varchar(20)		Not null,
+	precio			int				Not null default 0,
+	cantidad		int				Not null default 0,
+	ubicacion		int				Not null default 0, -- enlazada a una tabla de ubicaciones
+	tiempo_aliste	int				Not null default 0,
+	id_proveedor	int				Not null,		-- Foreing Key a Id Proveedor
+	Primary key (id)
 );
 
 
 CREATE TABLE Pedido(
-	Numero			int				Not null,
-	Fecha			date			Not null,
-	Estado			varchar(20)		Not null,		-- revisar Pendiente, Proceso, Enviado, Entregado
-	IdCliente		int				Not null,		-- Foreing Key a Id Cliente
-	Primary Key (Numero)
+	id			int				Not null auto_increment,
+	fecha_creacion	timestamp		Not null default NOW(),
+	estado			int				Not null,		-- revisar Pendiente, Proceso, Enviado, Entregado ENUM?
+	id_cliente		int				Not null,		-- Foreing Key a Id Cliente
+	Primary Key (id)
 );
 
 
 CREATE TABLE Cliente(
-	Id				int				Not null,
-	Nombre			varchar(20)		Not null,
-	Apellido1		varchar(20)		Not null,
-	Apellido2		varchar(20)		Not null,
-	Nacimiento		date			Not null,
-	Telefono		varchar(8)		Not null,		-- Revisar Tipo de dato
-	Direccion		varchar(20)		Not null,		-- Recisar si se de debe desglosar en pais, estadp, cuidad, zip, direccion
-	Primary Key (Id)
+	id				int				Not null,
+	nombre			varchar(20)		Not null,
+	apellido1		varchar(20)		Not null,
+	apellido2		varchar(20)		Not null,
+	nacimiento		date			Not null,
+	telefono		varchar(8)		Not null,		-- Revisar Tipo de dato
+	pais			int				Not null,		-- Recisar si se de debe desglosar en pais, estadp, cuidad, zip, direccion
+	estado			varchar(20)		Not null,		
+	ciudad			varchar(20)		Not null,		
+	codigo_postal	varchar(20)		Not null,		
+	direccion		varchar(20)		Not null,		
+    Primary Key (id)
 );
 
 
 CREATE TABLE Detalle(
-	IdProducto		int				Not null,		-- Foreing Key a Serial Producto
-	IdPedido		int				Not null,		-- Foreing Key a Numero Pedido
-	Cantidad		int				Not null,
-	Precio			int				Not null,
-	Primary Key (IdProducto, IdPedido)
+	id_producto		int		Not null,		-- Foreing Key a Serial Producto
+	id_pedido		int		Not null,		-- Foreing Key a Numero Pedido
+	cantidad		int		Not null,
+	precio			int		Not null,
+	Primary Key (id_producto, id_pedido)
 );
 
 
 CREATE TABLE Calificacion(
-	IdCliente		int				Not null,		-- Foreing Key a Id cliente
-	IdProveedor		int				Not null,		-- Foreing Key a Id proveedor
-	Nota			int				Not null,
-	Primary Key (IdCliente, IdProveedor)
+	id_cliente		int		Not null,		-- Foreing Key a Id cliente
+	id_proveedor	int		Not null,		-- Foreing Key a Id proveedor
+	nota			int		Not null,
+	Primary Key (id_cliente, id_proveedor)
 );
 
 CREATE TABLE Ubicaciones(
-	IdProveedor		int				Not null,		-- Foreing Key a Id Proveedor
-	Ubicacion		varchar(20)		Not null,
-	Primary Key (IdProveedor, Ubicacion)
+	id					int 	not null 	auto_increment,
+	id_proveedor		int		Not null,		-- Foreing Key a Id Proveedor
+	ubicacion			varchar(20)			Not null,
+	Primary Key (id)
 );
 
 
 ALTER TABLE Producto
-ADD Foreign Key (IdProveedor) References Proveedor(Id);
+ADD Foreign Key (id_proveedor) References Proveedor(id);
 
 
 ALTER TABLE  Pedido
-ADD Foreign Key (IdCliente) References Cliente(Id);
+ADD Foreign Key (id_cliente) References Cliente(Id);
 
 	
 ALTER TABLE  Detalle
-ADD Foreign Key (IdProducto) References Producto(Serial),
-add	Foreign Key (IdPedido) References Pedido(Numero);
+ADD Foreign Key (id_producto) References Producto(id),
+add	Foreign Key (id_pedido) References Pedido(id);
 
 
 ALTER TABLE  Calificacion
-ADD Foreign Key (IdCliente) References Cliente(Id),
-add	Foreign Key (IdProveedor) References Proveedor(Id);
+ADD Foreign Key (id_cliente) References Cliente(id),
+add	Foreign Key (id_proveedor) References Proveedor(id);
 
 	
-ALTER TABLE  Ubicaciones
-ADD Foreign Key (IdProveedor) References Proveedor(Id);
+-- ALTER TABLE  Ubicaciones
+-- ADD Foreign Key (id_proveedor) References Proveedor(Id);
