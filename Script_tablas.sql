@@ -2,7 +2,7 @@ CREATE DATABASE DeseoExpress;
 
 USE DeseoExpress;
 
-CREATE TABLE Proveedor(
+CREATE TABLE Proveedores(
 	id				int				Not null	auto_increment,
 	nombre			varchar(40)		Not null,
 	pais			int				Not null,		
@@ -12,7 +12,7 @@ CREATE TABLE Proveedor(
 );
 
 
-CREATE TABLE Producto(
+CREATE TABLE Productos(
 	id				int				Not null auto_increment, 	-- id en el sistema de ventas
 	serial			varchar(20)		Not null,			-- serial propio del producto (codigo de barras)
 	nombre			varchar(40)		Not null,
@@ -25,16 +25,16 @@ CREATE TABLE Producto(
 );
 
 
-CREATE TABLE Pedido(
+CREATE TABLE Pedidos(
 	id				int				Not null auto_increment,
-	fecha_creacion	timestamp		Not null default NOW(),
+	fecha_compra	timestamp		Not null default NOW(),
 	estado			int				Not null,		-- revisar Pendiente, Proceso, Enviado, Entregado ENUM?
 	id_cliente		int				Not null,		
 	Primary Key (id)
 );
 
 
-CREATE TABLE Cliente(
+CREATE TABLE Clientes(
 	id				int				Not null auto_increment,
 	nombre			varchar(20)		Not null,
 	apellido1		varchar(20)		Not null,
@@ -50,17 +50,18 @@ CREATE TABLE Cliente(
 );
 
 
-CREATE TABLE Detalle(
+CREATE TABLE Detalles(
 	id_producto		int		Not null,		-- Foreing Key a id Producto
 	id_pedido		int		Not null,		-- Foreing Key a Numero Pedido
 	cantidad		int		Not null,
 	precio			int		Not null,
+    id_ubicacion	int		Not null,
     -- agrega ubicacion????
 	Primary Key (id_producto, id_pedido)
 );
 
 
-CREATE TABLE Calificacion(
+CREATE TABLE Calificaciones(
 	id_cliente		int		Not null,		-- Foreing Key a Id cliente
 	id_proveedor	int		Not null,		-- Foreing Key a Id proveedor
 	nota			int		Not null,
@@ -93,36 +94,46 @@ Create table Paises(
 	Primary key (id)
 );
 
+Create table Tiempos_entrega(
+	pais_envio 		int not null,
+	pais_destino 	int not null,
+	tiempo 			int not null default 0,
+	Primary key (pais_envio, pais_destino)
+);
 
-ALTER TABLE Proveedor
+ALTER TABLE Proveedores
 ADD Foreign Key (pais) References Paises(id);
 
-ALTER TABLE Producto
-ADD Foreign Key (id_proveedor) References Proveedor(id);
+ALTER TABLE Productos
+ADD Foreign Key (id_proveedor) References Proveedores(id);
 -- ADD Foreign Key (ubicacion) References Ubicaiones(id);
 
-ALTER TABLE  Pedido
-ADD Foreign Key (id_cliente) References Cliente(Id);
+ALTER TABLE  Pedidos
+ADD Foreign Key (id_cliente) References Clientes(id);
 
-ALTER TABLE Cliente
+ALTER TABLE Clientes
 ADD Foreign Key (pais) References Paises(id);
 
 ALTER TABLE Ubicaciones
 ADD Foreign Key (pais) References Paises(id);
-	
-ALTER TABLE  Detalle
-ADD Foreign Key (id_producto) References Producto(id),
-add	Foreign Key (id_pedido) References Pedido(id);
 
 
-ALTER TABLE  Calificacion
-ADD Foreign Key (id_cliente) References Cliente(id),
-add	Foreign Key (id_proveedor) References Proveedor(id);
+ALTER TABLE Tiempos_entrega
+ADD Foreign Key (pais_envio) References Paises(id),
+ADD Foreign Key (pais_destino) References Paises(id);
+
+ALTER TABLE  Detalles
+ADD Foreign Key (id_producto) References Productos(id),
+add	Foreign Key (id_pedido) References Pedidos(id),
+add	Foreign Key (id_ubicacion) References Ubicaciones(id);
+
+ALTER TABLE  Calificaciones
+ADD Foreign Key (id_cliente) References Clientes(id),
+add	Foreign Key (id_proveedor) References Proveedores(id);
 
 ALTER TABLE  Stock
 ADD Foreign Key (id_ubicacion)	References 	Ubicaciones(id),
-add	Foreign Key (id_producto) 	References 	Producto(id);
+add	Foreign Key (id_producto) 	References 	Productos(id);
 
-	
 ALTER TABLE  Ubicaciones
-ADD Foreign Key (id_proveedor) References Proveedor(Id);
+ADD Foreign Key (id_proveedor) References Proveedores(id);
