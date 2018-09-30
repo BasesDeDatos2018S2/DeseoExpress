@@ -1,5 +1,5 @@
 use DeseoExpress;
-
+-- 14 paises 
 insert into Paises (nombre) values 
 ('Sweden'),
 ('Colombia'),
@@ -18,6 +18,7 @@ insert into Paises (nombre) values
 
 select id, nombre from Paises;
 
+-- 20 proveedores
 insert into Proveedor(nombre, pais, telefono) values 
 ('CVS PHARMACY', 1, '420-622-7548'),
 ('Jubilant DraxImage Inc.', 8, '979-415-9251'),
@@ -41,7 +42,7 @@ insert into Proveedor(nombre, pais, telefono) values
 ('Walgreen Company', 2, '917-577-3351');
 select id, nombre from Proveedor;
 
-
+-- 40 ubicaciones
 insert into Ubicaciones(id_proveedor, pais, estado,ciudad ,codigo_postal, direccion) values 
 (14, 6, 'Wawu', 'Épinal', '2539-1672', '451 Dahle Road'),
 (13, 5, 'Narutochō-mitsuishi', 'Jishu', '1873-7576', '413 Center Lane'),
@@ -85,7 +86,7 @@ insert into Ubicaciones(id_proveedor, pais, estado,ciudad ,codigo_postal, direcc
 (5, 6, 'Torrão', 'Kuznechnoye', '3143-8342', '8 Lyons Point');
 select id, pais, direccion from Ubicaciones;
 
-
+-- 30 clientes
 insert into Cliente (nombre, apellido1, apellido2, nacimiento, telefono, pais, estado, ciudad, codigo_postal, direccion) values 
 ('Sigfried', 'Morecombe', 'Langelay', '2002-09-24', '206-548-2807', 2, 'Krasnyy Gulyay', 'Guayabal', '3591-9294', '9414 Mesta Hill'),
 ('Janeva', 'Giovannetti', 'Cawcutt', '1999-12-13', '274-738-6770', 4, 'Oral', 'Tyazhinskiy', '0422-4723', '5 Hoffman Pass'),
@@ -119,7 +120,7 @@ insert into Cliente (nombre, apellido1, apellido2, nacimiento, telefono, pais, e
 ('Evin', 'Farman', 'Siely', '1993-11-16', '550-945-5592', 4, 'Pushkino', 'Huogezhuang', '2540-3179', '0 Bartillon Trail');
 select id, nombre, apellido1, telefono, nacimiento from Cliente;
 
-
+-- 30 productos
 insert into Producto (serial, nombre, precio, tiempo_aliste, id_proveedor) values
 ('nsa-3874223', 'Dill Weed - Fresh', 61.32, 10.3, 20),
 ('txs-7552989', 'Chickhen - Chicken Phyllo', 10.68, 11.6, 12),
@@ -152,9 +153,9 @@ insert into Producto (serial, nombre, precio, tiempo_aliste, id_proveedor) value
 ('joq-4920578', 'Filo Dough', 78.06, 2.2, 9),
 ('xaf-0623056', 'Broom - Corn', 23.2, 9.2, 10);
 
-
 select id ,serial, nombre, precio, id_proveedor from Producto;
 
+-- 59 stock
 insert into Stock (id_producto, id_ubicacion, cantidad) values 
 (1, 10, 274),
 (2, 22, 2790),
@@ -217,4 +218,188 @@ insert into Stock (id_producto, id_ubicacion, cantidad) values
 (29, 37, 2230);
 select id_producto, id_ubicacion, cantidad from Stock;
 
+insert into Calificacion (id_proveedor, id_cliente, nota) values 
+(1, 29, 3),
+  (2, 15, 4),
+  (3, 29, 4),
+  (4, 14, 2),
+  (5, 18, 5),
+  (6, 25, 2),
+  (7, 1, 3),
+  (8, 25, 0),
+  (9, 15, 5),
+  (10, 4, 1),
+  (11, 28, 0),
+  (12, 11, 1),
+  (13, 20, 1),
+  (14, 21, 4),
+  (15, 18, 2),
+  (16, 4, 3),
+  (17, 19, 4),
+  (18, 7, 5),
+  (19, 7, 3),
+  (20, 2, 0),
+  (20, 6, 4),
+  (1, 10, 4),
+  (2, 1, 1),
+  (3, 5, 3),
+  (4, 27, 3),
+  (5, 23, 4),
+  (6, 15, 1),
+  (7, 19, 1),
+  (8, 5, 0),
+  (9, 22, 2),
+  (10, 19, 4),
+  (11, 12, 4),
+  (12, 10, 0),
+  (13, 2, 1),
+  (14, 5, 5),
+  (15, 14, 2),
+  (16, 17, 1),
+  (17, 16, 5),
+  (18, 12, 5),
+  (19, 2, 3);
+  
+select id_proveedor, nota from Calificacion;
 
+
+insert into Pedido (fecha_creacion, estado, id_cliente) values 
+('2018-08-02 16:53:33', 2, 2),
+('2018-06-09 02:03:42', 1, 19),
+('2017-12-28 22:02:36', 2, 28),
+('2018-08-13 12:59:35', 1, 26),
+('2018-02-25 15:58:48', 1, 17),
+('2018-07-23 16:57:06', 1, 5),
+('2017-11-28 12:21:31', 1, 24),
+('2017-11-15 07:35:57', 1, 20),
+('2018-04-08 21:30:48', 1, 5),
+('2017-12-22 15:06:34', 1, 19),
+('2017-11-19 14:55:51', 2, 20),
+('2018-08-04 02:21:15', 1, 22),
+('2018-06-19 03:03:15', 2, 16),
+('2018-04-08 13:22:52', 1, 23),
+('2017-11-25 11:27:19', 1, 8),
+('2018-07-10 01:23:21', 1, 14),
+('2017-12-01 11:52:24', 1, 23),
+('2018-09-21 21:37:28', 2, 27),
+('2017-11-03 23:42:49', 2, 27),
+('2018-01-25 20:10:16', 2, 14),
+('2018-04-13 09:14:02', 1, 30),
+('2018-09-22 14:09:50', 1, 3),
+('2018-08-23 20:39:58', 1, 19),
+('2018-07-06 19:56:37', 2, 29),
+('2018-02-23 04:35:12', 2, 20),
+('2018-07-03 05:38:38', 2, 16),
+('2017-12-23 02:03:33', 2, 8),
+('2018-03-06 17:08:16', 2, 26),
+('2017-11-10 23:49:44', 2, 27),
+('2018-06-01 02:25:36', 1, 6);
+
+select id, fecha_creacion, id_cliente from Pedido;
+
+
+
+
+
+insert into detalle (id_producto, id_pedido, precio) values 
+(25, 1, 14),
+(14, 2, 8),
+(25, 3, 10),
+(22, 4, 19),
+(27, 5, 16),
+(18, 6, 3),
+(22, 7, 13),
+(2, 8, 14),
+(10, 9, 1),
+(6, 10, 12),
+(30, 11, 9),
+(8, 12, 5),
+(12, 13, 12),
+(28, 14, 8),
+(11, 15, 2),
+(21, 16, 20),
+(16, 17, 19),
+(4, 18, 1),
+(6, 19, 5),
+(1, 20, 11),
+(25, 21, 7),
+(14, 22, 9),
+(21, 23, 17),
+(8, 24, 1),
+(9, 25, 6),
+(17, 26, 10),
+(7, 27, 13),
+(14, 28, 5),
+(20, 29, 16),
+(8, 0, 4),
+(12, 1, 18),
+(16, 2, 17),
+(16, 3, 12),
+(8, 4, 15),
+(9, 5, 15),
+(7, 6, 18),
+(22, 7, 18),
+(28, 8, 17),
+(3, 9, 7),
+(30, 10, 18),
+(25, 11, 5),
+(8, 12, 2),
+(3, 13, 14),
+(23, 14, 9),
+(17, 15, 17),
+(24, 16, 9),
+(24, 17, 20),
+(4, 18, 7),
+(15, 19, 18),
+(18, 20, 4),
+(21, 21, 7),
+(21, 22, 20),
+(7, 23, 11),
+(7, 24, 16),
+(21, 25, 7),
+(16, 26, 1),
+(18, 27, 12),
+(18, 28, 13),
+(6, 29, 6),
+(7, 0, 15),
+(30, 1, 13),
+(28, 2, 10),
+(27, 3, 5),
+(1, 4, 12),
+(30, 5, 19),
+(18, 6, 6),
+(21, 7, 4),
+(5, 8, 18),
+(19, 9, 9),
+(29, 10, 11),
+(8, 11, 3),
+(22, 12, 3),
+(12, 13, 14),
+(22, 14, 4),
+(3, 15, 6),
+(2, 16, 7),
+(25, 17, 7),
+(29, 18, 2),
+(27, 19, 18),
+(7, 20, 20),
+(15, 21, 12),
+(10, 22, 10),
+(7, 23, 16),
+(26, 24, 4),
+(27, 25, 4),
+(4, 26, 5),
+(27, 27, 8),
+(26, 28, 11),
+(17, 29, 9),
+(6, 0, 15),
+(30, 1, 18),
+(22, 2, 6),
+(9, 3, 17),
+(1, 4, 7),
+(2, 5, 6),
+(29, 6, 11),
+(3, 7, 19),
+(10, 8, 13),
+(10, 9, 14),
+(6, 10, 8);
+select id,id_pedido, id_producto, precio from Detalle order by id_pedido;
