@@ -17,8 +17,8 @@ CREATE TABLE Productos(
 	serial			varchar(20)		Not null,			-- serial propio del producto (codigo de barras)
 	nombre			varchar(40)		Not null,
 	precio			int				Not null default 0,
-	-- cantidad		int				Not null default 0,
-	-- ubicacion		int				Not null default 0, -- enlazada a una tabla de ubicaciones
+	cantidad		int				Not null default 0,
+	ubicacion		int				Not null default 0, -- enlazada a una tabla de ubicaciones
 	tiempo_aliste	int				Not null default 0,
 	id_proveedor	int				Not null,		
 	Primary key (id)
@@ -55,7 +55,7 @@ CREATE TABLE Detalles(
 	id_pedido		int		Not null,		-- Foreing Key a Numero Pedido
 	cantidad		int		Not null,
 	precio			int		Not null,
-    id_ubicacion	int		Not null,
+    -- id_ubicacion	int		Not null,
     -- agrega ubicacion????
 	Primary Key (id_producto, id_pedido)
 );
@@ -71,7 +71,6 @@ CREATE TABLE Calificaciones(
 CREATE TABLE Ubicaciones(
 	id					int 	Not null 	auto_increment,
 	id_proveedor		int		Not null,		-- Foreing Key a Id Proveedor
-	-- ubicacion			varchar(20)			Not null,
 	pais			int				Not null,		
 	estado			varchar(20)		Not null,		
 	ciudad			varchar(20)		Not null,		
@@ -80,12 +79,12 @@ CREATE TABLE Ubicaciones(
 	Primary Key (id)
 );
 
-CREATE TABLE Stock(
-	id_producto			int 	Not null auto_increment,
-	cantidad			int		Not null,		-- Foreing Key a Id Proveedor
-	id_ubicacion		int		Not null,
-	Primary Key (id_producto, id_ubicacion)
-);
+-- CREATE TABLE Stock(
+-- 	id_producto			int 	Not null auto_increment,
+-- 	cantidad			int		Not null,		-- Foreing Key a Id Proveedor
+-- 	id_ubicacion		int		Not null,
+-- 	Primary Key (id_producto, id_ubicacion)
+-- );
 
 Create table Paises(
 	id int not null auto_increment,
@@ -115,8 +114,8 @@ ALTER TABLE Clientes
 ADD Foreign Key (pais) References Paises(id);
 
 ALTER TABLE Ubicaciones
-ADD Foreign Key (pais) References Paises(id);
-
+ADD Foreign Key (pais) References Paises(id),
+ADD Foreign Key (id_proveedor) References Proveedores(id);
 
 ALTER TABLE Tiempos_entrega
 ADD Foreign Key (pais_envio) References Paises(id),
@@ -124,16 +123,12 @@ ADD Foreign Key (pais_destino) References Paises(id);
 
 ALTER TABLE  Detalles
 ADD Foreign Key (id_producto) References Productos(id),
-add	Foreign Key (id_pedido) References Pedidos(id),
-add	Foreign Key (id_ubicacion) References Ubicaciones(id);
+add	Foreign Key (id_pedido) References Pedidos(id);
 
 ALTER TABLE  Calificaciones
 ADD Foreign Key (id_cliente) References Clientes(id),
 add	Foreign Key (id_proveedor) References Proveedores(id);
 
-ALTER TABLE  Stock
-ADD Foreign Key (id_ubicacion)	References 	Ubicaciones(id),
-add	Foreign Key (id_producto) 	References 	Productos(id);
-
-ALTER TABLE  Ubicaciones
-ADD Foreign Key (id_proveedor) References Proveedores(id);
+-- ALTER TABLE  Stock
+-- ADD Foreign Key (id_ubicacion)	References 	Ubicaciones(id),
+-- add	Foreign Key (id_producto) 	References 	Productos(id);
