@@ -18,7 +18,7 @@ CREATE TABLE Productos(
 	nombre			varchar(40)		Not null,
 	precio			int				Not null default 0,
 	cantidad		int				Not null default 0,
-	ubicacion		int				Not null default 0, -- enlazada a una tabla de ubicaciones
+	id_ubicacion	int				Not null, -- enlazada a una tabla de ubicaciones
 	tiempo_aliste	int				Not null default 0,
 	id_proveedor	int				Not null,		
 	Primary key (id)
@@ -104,8 +104,8 @@ ALTER TABLE Proveedores
 ADD Foreign Key (pais) References Paises(id);
 
 ALTER TABLE Productos
-ADD Foreign Key (id_proveedor) References Proveedores(id);
--- ADD Foreign Key (ubicacion) References Ubicaiones(id);
+ADD Foreign Key (id_proveedor) References Proveedores(id),
+ADD Foreign Key (id_ubicacion) References Ubicaciones(id);
 
 ALTER TABLE  Pedidos
 ADD Foreign Key (id_cliente) References Clientes(id);
