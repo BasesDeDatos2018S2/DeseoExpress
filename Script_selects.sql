@@ -133,3 +133,36 @@ ORDER BY ganacias_totales desc;
 -- ganancias deo proveedor en un rango de tiempo
 -- pais que mas compra
 -- pais que mas vende 
+
+
+
+
+
+-- Reportes, podrá verificar los productos más vendidos, productos que generaron más ganancias, proveedores más exitosos (que tienen mayor cantidad de ventas)
+
+
+-- productos más vendidos
+select id_producto as id, sum(cantidad) as total_vendidos
+from Detalles
+group by id_producto;
+
+
+-- generaron más ganancias
+select id_producto as id, sum(cantidad* precio) as ganancias_totales
+from Detalles
+group by id_producto
+order by ganancias_totales desc;
+
+-- proveedores más exitosos(que tienen mayor cantidad de ventas)
+select P.id_proveedor, Sum(1) as ventas_totales
+from Detalles D left outer join Productos P on D.id_producto = P.id
+group by P.id_proveedor
+order by ventas_totales desc;
+
+
+-- productos que generaron más ganancias
+select id, sum(1) as ventas_totales
+from Pedidos
+group by id_proveedor
+order by ventas_totales desc;
+

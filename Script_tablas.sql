@@ -30,6 +30,7 @@ CREATE TABLE Pedidos(
 	fecha_compra	timestamp		Not null default NOW(),
 	estado			int				Not null,		-- revisar Pendiente, Proceso, Enviado, Entregado ENUM?
 	id_cliente		int				Not null,		
+	-- id_proveedor		int				Not null,		
 	Primary Key (id)
 );
 
@@ -108,7 +109,8 @@ ADD Foreign Key (id_proveedor) References Proveedores(id),
 ADD Foreign Key (id_ubicacion) References Ubicaciones(id);
 
 ALTER TABLE  Pedidos
-ADD Foreign Key (id_cliente) References Clientes(id);
+ADD Foreign Key (id_cliente) References Clientes(id),
+-- ADD Foreign Key (id_proveedor) References Proveedor(id);
 
 ALTER TABLE Clientes
 ADD Foreign Key (pais) References Paises(id);
