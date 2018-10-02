@@ -1,5 +1,28 @@
 use DeseoExpress;
 
+-- Reportes, podrá verificar los productos más vendidos, productos que generaron más ganancias, proveedores más exitosos (que tienen mayor cantidad de ventas)
+
+
+-- productos más vendidos
+select id_producto as id, sum(cantidad) as total_vendidos
+from Detalles
+group by id_producto;
+
+
+-- productos generaron más ganancias
+select id_producto as id, sum(cantidad* precio) as ganancias_totales
+from Detalles
+group by id_producto
+order by ganancias_totales desc;
+
+-- proveedores más exitosos(que tienen mayor cantidad de ventas)
+select P.id_proveedor, Sum(1) as ventas_totales
+from Detalles D left outer join Productos P on D.id_producto = P.id
+group by P.id_proveedor
+order by ventas_totales desc;
+
+
+
 
 SELECT 
     id_pedido, id_producto, precio * cantidad AS total
@@ -40,30 +63,7 @@ FROM
     Clientes C ON id_cliente = C.id;
 
 
--- tiempo envio de destino y de origen
--- SELECT 
---     IE.id, T.tiempo
--- FROM
---     Tiempos_entrega T,
---     (SELECT 
---         Pe.id, C.pais AS id_pais_destino, id_pais_origen
---     FROM
---         ((SELECT 
---         D.id_pedido, U.pais AS id_pais_origen
---     FROM
---         Detalles D
---     JOIN Productos P ON D.id_producto = P.id
---     JOIN Ubicaciones U ON id_ubicacion = U.id
---     WHERE
---         P.id_ubicacion = U.id
---             AND D.id_producto = P.id) info_pedido
---     JOIN Pedidos Pe ON Pe.id = info_pedido.id_pedido)
---     JOIN Clientes C ON id_cliente = C.id) IE
--- WHERE
---     IE.id_pais_destino = T.pais_destino
---         AND IE.id_pais_origen = T.pais_envio;
 
--- tiempo envio de destino y de origen
 SELECT 
     IE.id,  Max(T.tiempo)
 FROM
@@ -136,28 +136,6 @@ ORDER BY ganacias_totales desc;
 
 
 
-
-
--- Reportes, podrá verificar los productos más vendidos, productos que generaron más ganancias, proveedores más exitosos (que tienen mayor cantidad de ventas)
-
-
--- productos más vendidos
-select id_producto as id, sum(cantidad) as total_vendidos
-from Detalles
-group by id_producto;
-
-
--- productos generaron más ganancias
-select id_producto as id, sum(cantidad* precio) as ganancias_totales
-from Detalles
-group by id_producto
-order by ganancias_totales desc;
-
--- proveedores más exitosos(que tienen mayor cantidad de ventas)
-select P.id_proveedor, Sum(1) as ventas_totales
-from Detalles D left outer join Productos P on D.id_producto = P.id
-group by P.id_proveedor
-order by ventas_totales desc;
 
 
 
