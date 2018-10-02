@@ -1,4 +1,5 @@
 CREATE DATABASE DeseoExpress;
+go;
 
 USE DeseoExpress;
 
