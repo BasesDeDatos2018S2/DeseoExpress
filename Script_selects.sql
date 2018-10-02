@@ -147,7 +147,7 @@ from Detalles
 group by id_producto;
 
 
--- generaron más ganancias
+-- productos generaron más ganancias
 select id_producto as id, sum(cantidad* precio) as ganancias_totales
 from Detalles
 group by id_producto
@@ -160,9 +160,4 @@ group by P.id_proveedor
 order by ventas_totales desc;
 
 
--- productos que generaron más ganancias
-select id, sum(1) as ventas_totales
-from Pedidos
-group by id_proveedor
-order by ventas_totales desc;
 
