@@ -1,5 +1,5 @@
-CREATE DATABASE DeseoExpress;
-go;
+CREATE DATABASE DeseoExpress
+go
 
 USE DeseoExpress;
 
@@ -28,7 +28,7 @@ CREATE TABLE Productos(
 
 CREATE TABLE Pedidos(
 	id				int				Not null IDENTITY(1,1),
-	fecha_compra	timestamp		Not null default CURRENT_TIMESTAMP,
+	fecha_compra	datetime		Not null default CURRENT_TIMESTAMP,
 	estado			int				Not null,		-- revisar Pendiente, Proceso, Enviado, Entregado ENUM?
 	id_cliente		int				Not null,		
 	-- id_proveedor		int				Not null,		
@@ -102,7 +102,7 @@ ADD Foreign Key (id_proveedor) References Proveedores(id),
     Foreign Key (id_ubicacion) References Ubicaciones(id);
 
 ALTER TABLE  Pedidos
-ADD Foreign Key (id_cliente) References Clientes(id),
+ADD Foreign Key (id_cliente) References Clientes(id);
 
 ALTER TABLE Clientes
 ADD Foreign Key (pais) References Paises(id);
